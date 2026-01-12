@@ -23,7 +23,7 @@ const FOOTER_DATA = {
   },
   navigation: [
     { label: "Home", href: "/" },
-    { label: "Phones & Gadgets", href: "/phones" },
+    { label: "Phones & Gadgets", href: "/store" },
     { label: "Services", href: "/services" },
     { label: "About Us", href: "/about-us" },
     { label: "Contact Us", href: "mailto:princnwachukwu308@yahoo.com" },

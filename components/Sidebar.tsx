@@ -13,7 +13,8 @@ import {
   FiMenu,
   FiX,
   FiSettings,
-  FiMessageSquare
+  FiMessageSquare,
+  FiMonitor 
 } from 'react-icons/fi'
 import { MdOutlineLocalOffer as OfferIcon } from 'react-icons/md'
 import { useState, useEffect } from 'react'
@@ -63,6 +64,7 @@ export default function SideBar() {
     { id: 'power-banks', label: 'Power Banks', icon: FiBattery, color: 'text-green-500', bgColor: 'bg-green-500/10', count: 15 },
     { id: 'speakers', label: 'Bluetooth Speakers', icon: FiSpeaker, color: 'text-orange-500', bgColor: 'bg-orange-500/10', count: 6 },
     { id: 'headphones', label: 'Headphones', icon: FiHeadphones, color: 'text-pink-500', bgColor: 'bg-pink-500/10', count: 9 },
+    { id: 'laptop', label: 'Laptop', icon: FiMonitor , color: 'text-red-500', bgColor: 'bg-red-500/10', count: 2 },
     { id: 'cases', label: 'Cases & Covers', icon: FiPackage, color: 'text-indigo-500', bgColor: 'bg-indigo-500/10', count: 24 },
     { id: 'chargers', label: 'Chargers', icon: FiZap, color: 'text-yellow-500', bgColor: 'bg-yellow-500/10', count: 18 },
     { id: 'screen-protectors', label: 'Screen Protectors', icon: FiShield, color: 'text-teal-500', bgColor: 'bg-teal-500/10', count: 10 }
@@ -99,7 +101,7 @@ export default function SideBar() {
 
       {/* SIDEBAR WRAPPER */}
       <div className={`
-        ${isMobile ? 'fixed inset-0 z-[100]' : 'relative'}
+        ${isMobile ? 'fixed inset-0 z-30' : 'relative'}
         transition-all duration-300 ${isOpen ? 'visible' : 'invisible md:visible'}
       `}>
         

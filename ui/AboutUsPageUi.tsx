@@ -4,6 +4,8 @@ import {
   FiSmartphone, FiTool, FiShoppingBag, FiUsers, 
   FiArrowRight, FiTruck, FiCheckCircle, FiPackage, FiAward 
 } from 'react-icons/fi'
+import Link from 'next/link'
+
 
 export default function AboutUs() {
     // UPDATED OBJECT MODELS: FOCUS ON SALES & RETAIL
@@ -187,12 +189,16 @@ export default function AboutUs() {
             <div className="relative z-10 max-w-2xl mx-auto">
                 <h2 className="text-3xl md:text-5xl font-black uppercase italic mb-8 tracking-tighter">Ready for an Upgrade?</h2>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-yellow-500 text-slate-900 px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
-                    Explore your options <FiArrowRight />
-                </button>
-                <button className="bg-transparent border border-white/30 text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white/10 transition-all active:scale-95">
-                    Check Repairs
-                </button>
+                <Link href={"/store"}>
+                    <button className="bg-yellow-500 text-slate-900 px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                        Explore your options <FiArrowRight />
+                    </button>
+                </Link>
+                <Link href={"/services"}>
+                    <button className="bg-transparent border border-white/30 text-white px-10 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-white/10 transition-all active:scale-95">
+                        Check Repairs
+                    </button>
+                </Link>
                 </div>
             </div>
             </div>

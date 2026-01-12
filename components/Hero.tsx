@@ -4,6 +4,7 @@
 import { FiArrowRight, FiChevronRight, FiShoppingCart, FiZap, FiShield, FiXCircle } from 'react-icons/fi'
 import { useState } from 'react'
 import Link from 'next/link'
+import FeaturedProducts from './FeaturedProducts';
 
 export default function Hero() {
     // Warranty States
@@ -19,7 +20,7 @@ export default function Hero() {
         
         ctaPrimary: {
             text: "Shop Now",
-            link: "/phone" 
+            link: "/store" 
         },
         
         ctaSecondary: {
@@ -35,6 +36,7 @@ export default function Hero() {
         ],
         
         featuredProduct: {
+            id:1,
             name: "Samsung",
             model: "Galaxy A07",
             tagline: "200MP Camera | 5G Ready",
@@ -42,7 +44,7 @@ export default function Hero() {
             features: ["200MP Camera", "5G Ready", "120Hz Display", "5000mAh"],
             availability: true,
             badge: "LIMITED EDITION",
-            heroImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStIBT-W9hWAnEdY8GDB71uQ5IjFmB61CrYvA&s"
+            heroImage: "https://i.ytimg.com/vi/rnW1pzdlIrk/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB5X5Fe1wnJ7FmWQAK9si_WKPCjrg"
         },
 
         twoYearBrands: ['oppo', 'samsung', 'vivo', 'huawei'],
@@ -79,7 +81,7 @@ export default function Hero() {
     }
 
     return (
-        <section className="relative overflow-hidden bg-white">
+        <section className="pt-6 relative overflow-hidden bg-white">
             {/* WARRANTY OVERLAY */}
             {isOverlayOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in">
@@ -173,7 +175,7 @@ export default function Hero() {
                                                             <div className="text-gray-200 text-xs drop-shadow-md">Starting at</div>
                                                             <div className="text-2xl font-bold text-white drop-shadow-md">{heroData.featuredProduct.price}</div>
                                                         </div>
-                                                        <button className="px-5 py-2.5 bg-gradient-to-r from-[#F8AE1B] to-yellow-500 text-black font-bold rounded-full text-sm hover:shadow-lg transition-all active:scale-95 z-20">Buy Now</button>
+                                                        <Link href={`/purchase?id=${heroData.featuredProduct.id}`}><button className="px-5 py-2.5 bg-gradient-to-r from-[#F8AE1B] to-yellow-500 text-black font-bold rounded-full text-sm hover:shadow-lg transition-all active:scale-95 z-20">Buy Now</button></Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -303,7 +305,9 @@ export default function Hero() {
                                                             <div className="text-gray-100 text-sm drop-shadow-lg">Starting at</div>
                                                             <div className="text-3xl font-bold text-white drop-shadow-lg">{heroData.featuredProduct.price}</div>
                                                         </div>
-                                                        <button className="px-6 py-3 bg-gradient-to-r from-[#F8AE1B] to-yellow-500 text-black font-bold rounded-full hover:shadow-lg transition-all hover:scale-105 z-20">Buy Now</button>
+                                                        <Link href={`/purchase?id=${heroData.featuredProduct.id}`}>
+                                                            <button className="px-6 py-3 bg-gradient-to-r from-[#F8AE1B] to-yellow-500 text-black font-bold rounded-full hover:shadow-lg transition-all hover:scale-105 z-20">Buy Now</button>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

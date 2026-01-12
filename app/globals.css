@@ -24,3 +24,210 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Minimal Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(31, 41, 55, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #f59e0b, #d97706);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #f59e0b rgba(31, 41, 55, 0.1);
+}
+
+/* ========== ALL ANIMATIONS ========== */
+
+/* 1. Phone Float Animation - Used for main phone */
+@keyframes phone-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(-1deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1deg);
+  }
+  75% {
+    transform: translateY(-10px) rotate(0deg);
+  }
+}
+
+/* 2. Float Animation - Used for accessories (both mobile & desktop) */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+/* 3. Particle Animation - Used for floating dots */
+@keyframes particle {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* 4. Shimmer Animation - Used for gradient text effects */
+@keyframes shimmer {
+  0% {
+    background-position: -200px center;
+  }
+  100% {
+    background-position: 200px center;
+  }
+}
+
+/* 5. Pulse Slow Animation - Used for background blobs */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* 6. Slide Up Animation - Used for content reveal */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== ANIMATION CLASSES ========== */
+
+/* Phone Animation */
+.animate-phone-float {
+  animation: phone-float 6s ease-in-out infinite;
+}
+
+/* Accessories Float Animation - THIS is the accessory float animation */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Particle Animation */
+.animate-particle {
+  animation: particle 3s ease-in-out infinite;
+}
+
+/* Shimmer Animation */
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Pulse Animation */
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Slide Up Animation */
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+/* Add these if not already present */
+
+/* Float Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px center;
+  }
+  100% {
+    background-position: 200px center;
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Pulse Slow Animation */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Slide Up Animation */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+/* Line Clamp Utility */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}

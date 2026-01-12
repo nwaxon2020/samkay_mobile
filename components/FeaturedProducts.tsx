@@ -3,6 +3,8 @@
 
 import { FiStar, FiShoppingCart, FiChevronRight, FiZap, FiTag } from 'react-icons/fi'
 import { useState } from 'react'
+import Link from 'next/link'
+
 
 export default function FeaturedProducts() {
     // Admin-manageable data structure
@@ -194,10 +196,12 @@ export default function FeaturedProducts() {
 
             {/* View All Button */}
             <div className="text-center mt-10 sm:mt-12 lg:mt-16 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <button className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-xl border-2 border-[#F8AE1B]/50 text-gray-300 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-[#F8AE1B]/10">
-                <span>{featuredData.ctaButton}</span>
-                <FiChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
-            </button>
+            <Link href={"/phone"}>
+                <button className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold rounded-xl border-2 border-[#F8AE1B]/50 text-gray-300 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-[#F8AE1B]/10">
+                    <span>{featuredData.ctaButton}</span>
+                    <FiChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
+                </button>
+            </Link>
             </div>
         </div>
         </section>

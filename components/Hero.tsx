@@ -109,7 +109,7 @@ export default function Hero() {
                             </div>
                             <p className="text-xs text-gray-600 leading-relaxed">
                                 In the Nigerian phone market, standard mobile devices come with a 1-year manufacturer warranty. 
-                                Premium brands ({heroData.twoYearBrands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}) typically offer extended 2-year coverage through authorized centers. 
+                               <span className='font-semibold'> Premium brands ({heroData.twoYearBrands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}) typically offer extended 2-year coverage through authorized centers. </span>
                                 This covers factory defects but excludes liquid damage, cracked screens, and software rooting.
                             </p>
                         </div>
@@ -134,7 +134,7 @@ export default function Hero() {
             </div>
         )}
         
-        <div className="container mx-auto px-4 md:px-8 py-2 md:py-16 relative z-10">
+        <div className="container mx-auto px-4 md:px-8 md:py-16 relative z-10">
             <div className="max-w-7xl mx-auto">
             
             {/* Mobile Layout (Stacked) */}

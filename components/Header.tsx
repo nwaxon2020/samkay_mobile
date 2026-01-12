@@ -19,7 +19,7 @@ export default function Header() {
 
     return (
         <header className="sticky top-0 z-20 md:z-40 w-full bg-gray-900/95 backdrop-blur-md text-white shadow-xl border-b border-gray-700/50 overflow-x-hidden">
-            <div className="container mx-auto px-4 py-3">
+            <div className="container mx-auto px-4 py-5">
                 <div className="w-full flex items-center justify-between gap-2">
                     
                     {/* Logo & Mobile Menu Toggle */}

@@ -1,10 +1,15 @@
 // src/components/Hero.tsx
 'use client'
 
-import { FiArrowRight, FiChevronRight, FiShoppingCart, FiZap, FiShield, FiStar } from 'react-icons/fi'
+import { FiArrowRight, FiChevronRight, FiShoppingCart, FiZap, FiShield, FiXCircle } from 'react-icons/fi'
 import { useState } from 'react'
+import Link from 'next/link'
 
 export default function Hero() {
+    // Warranty States
+    const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+    const [warrantyObj, setWarrantyObj] = useState({ phoneName: "", years: 1 });
+
     // Admin-manageable data structure
     const [heroData, setHeroData] = useState({
         title: "Power Up Your",
@@ -14,7 +19,7 @@ export default function Hero() {
         
         ctaPrimary: {
             text: "Shop Now",
-            link: "/shop"
+            link: "/phone" 
         },
         
         ctaSecondary: {
@@ -38,6 +43,9 @@ export default function Hero() {
             availability: true,
             badge: "LIMITED EDITION"
         },
+
+        // Dynamic list for 2-year warranty brands
+        twoYearBrands: ['oppo', 'samsung', 'vivo', 'huawei',],
         
         accessories: [
             { id: 1, name: "Wireless Earbuds", icon: "🎧", tag: "+" },
@@ -51,17 +59,19 @@ export default function Hero() {
         }
     })
 
-    // Admin update function
-    const updateHeroData = (section: string, value: any) => {
-        setHeroData(prev => ({
-            ...prev,
-            [section]: value
-        }))
-        // In real app, save to backend
-        console.log(`Updated ${section}:`, value)
-    }
+    // Logic for Nigerian Phone Market Warranty
+    const handleWarrantyClick = () => {
+        const brand = heroData.featuredProduct.name.toLowerCase();
+        // Check if brand is in the premium list
+        const duration = heroData.twoYearBrands.includes(brand) ? 2 : 1;
 
-    // Helper for responsive background sizes
+        setWarrantyObj({
+            phoneName: `${heroData.featuredProduct.name} ${heroData.featuredProduct.model}`,
+            years: duration
+        });
+        setIsOverlayOpen(true);
+    };
+
     const getBackgroundSize = (size: 'sm' | 'md' | 'lg' = 'lg') => {
         const sizes = {
             sm: 'w-32 h-32 md:w-48 md:h-48',
@@ -73,6 +83,48 @@ export default function Hero() {
 
     return (
         <section className="relative overflow-hidden bg-white">
+        
+        {/* WARRANTY OVERLAY */}
+        {isOverlayOpen && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-fade-in">
+                <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative border border-gray-100 scale-in-center">
+                    <button 
+                        onClick={() => setIsOverlayOpen(false)}
+                        className="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition-colors"
+                    >
+                        <FiXCircle size={28} />
+                    </button>
+                    
+                    <div className="text-center">
+                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <FiShield className="text-blue-600" size={32} />
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900 mb-2">Warranty Policy</h3>
+                        <p className="text-[#F8AE1B] font-semibold mb-4">{warrantyObj.phoneName}</p>
+                        
+                        <div className="bg-gray-50 rounded-2xl p-4 mb-6 text-left space-y-3">
+                            <div className="flex justify-between border-b pb-2 border-gray-200">
+                                <span className="text-gray-500">Duration:</span>
+                                <span className="font-bold text-gray-900">{warrantyObj.years} Year(s)</span>
+                            </div>
+                            <p className="text-xs text-gray-600 leading-relaxed">
+                                In the Nigerian phone market, standard mobile devices come with a 1-year manufacturer warranty. 
+                                Premium brands ({heroData.twoYearBrands.map(b => b.charAt(0).toUpperCase() + b.slice(1)).join(', ')}) typically offer extended 2-year coverage through authorized centers. 
+                                This covers factory defects but excludes liquid damage, cracked screens, and software rooting.
+                            </p>
+                        </div>
+                        
+                        <button 
+                            onClick={() => setIsOverlayOpen(false)}
+                            className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg active:scale-95"
+                        >
+                            I Understand
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
         {/* Dynamic background effects - Responsive */}
         {heroData.settings.backgroundEffects && (
             <div className="absolute inset-0 overflow-hidden">
@@ -82,7 +134,7 @@ export default function Hero() {
             </div>
         )}
         
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 relative z-10">
+        <div className="container mx-auto px-4 md:px-8 py-2 md:py-16 relative z-10">
             <div className="max-w-7xl mx-auto">
             
             {/* Mobile Layout (Stacked) */}
@@ -113,24 +165,16 @@ export default function Hero() {
                 {/* Phone Visual - Centered on Mobile */}
                 <div className="px-5 my-8 sm:my-12">
                     <div className="relative mx-auto w-full max-w-xs sm:max-w-sm">
-                        {/* Floating Device */}
                         <div className={`relative z-10 ${heroData.settings.animations ? 'animate-phone-float' : ''}`}>
-                        {/* Phone Device */}
                         <div className="relative w-full h-[480px] sm:h-[520px] mx-auto bg-gradient-to-b from-gray-900 to-black rounded-[2.5rem] shadow-2xl border-[12px] sm:border-[14px] border-gray-800">
-                            {/* Screen Glow Effect */}
                             {heroData.settings.backgroundEffects && (
                             <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-[#F8AE1B]/30 via-transparent to-blue-500/30 rounded-[3rem] blur-xl opacity-30"></div>
                             )}
                             
-                            {/* Screen */}
                             <div className="absolute inset-2 sm:inset-3 bg-gradient-to-br from-gray-900 to-black rounded-[1.5rem] sm:rounded-[1.8rem] overflow-hidden border border-gray-700/50">
-                            {/* Dynamic Screen Content */}
                             <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-                            
-                            {/* Animated Elements */}
                             <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-[#F8AE1B] via-yellow-400 to-[#F8AE1B] animate-shimmer"></div>
                             
-                            {/* Screen Content */}
                             <div className="relative p-4 sm:p-6 h-full flex flex-col justify-between">
                                 <div>
                                 <div className="flex items-center gap-1.5 mb-3">
@@ -159,12 +203,9 @@ export default function Hero() {
                                 </div>
                             </div>
                             </div>
-                            
-                            {/* Dynamic Island */}
                             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-28 h-5 sm:w-32 sm:h-6 bg-black rounded-b-xl border-x border-b border-gray-700"></div>
                         </div>
                         
-                        {/* Floating Accessories - Only show if enabled and screen is wide enough */}
                         {heroData.settings.floatingElements && heroData.settings.animations && (
                             <>
                             <div className="absolute -top-4 -left-6 w-16 h-16 bg-gradient-to-br from-gray-800 to-black rounded-xl border border-gray-700/50 flex items-center justify-center shadow-lg animate-float"
@@ -190,7 +231,7 @@ export default function Hero() {
 
                 {/* CTA Buttons - Mobile */}
                 <div className="flex flex-col gap-3 pt-4 px-4">
-                <button className="group relative inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold rounded-xl overflow-hidden transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl">
+                <Link href={heroData.ctaPrimary.link} className="group relative inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold rounded-xl overflow-hidden transition-all duration-300 active:scale-95 shadow-lg hover:shadow-xl">
                     <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] to-yellow-500"></span>
                     <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] via-yellow-500 to-[#F8AE1B] opacity-0 group-hover:opacity-100 animate-shimmer"></span>
                     <span className="relative flex items-center text-gray-900 font-bold">
@@ -198,9 +239,9 @@ export default function Hero() {
                     {heroData.ctaPrimary.text}
                     <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                     </span>
-                </button>
+                </Link>
                 
-                <button className="group inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold rounded-xl border border-[#F8AE1B]/50 text-gray-700 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 active:scale-95 shadow-sm hover:shadow-md">
+                <button onClick={handleWarrantyClick} className="group inline-flex items-center justify-center px-6 py-3.5 text-base font-semibold rounded-xl border border-[#F8AE1B]/50 text-gray-700 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 active:scale-95 shadow-sm hover:shadow-md">
                     <FiShield className="mr-2" size={18} />
                     <span>{heroData.ctaSecondary.text}</span>
                     <FiChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
@@ -209,7 +250,7 @@ export default function Hero() {
 
                 {/* Stats Grid - Mobile */}
                 <div className="grid grid-cols-2 gap-3 pt-8 px-4">
-                {heroData.stats.map((stat, index) => (
+                {heroData.stats.map((stat) => (
                     <div key={stat.id} className="p-3 rounded-lg bg-gray-50 border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-300">
                     <div className="flex items-center gap-2 mb-1">
                         <span className="text-lg">{stat.icon}</span>
@@ -244,7 +285,7 @@ export default function Hero() {
                 </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg">
+                    <Link href={heroData.ctaPrimary.link} className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-lg">
                     <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] to-yellow-500"></span>
                     <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] via-yellow-500 to-[#F8AE1B] opacity-0 group-hover:opacity-100 animate-shimmer"></span>
                     <span className="relative flex items-center text-gray-900 font-bold">
@@ -252,9 +293,9 @@ export default function Hero() {
                         {heroData.ctaPrimary.text}
                         <FiArrowRight className="ml-3 group-hover:translate-x-1 transition-transform" size={20} />
                     </span>
-                    </button>
+                    </Link>
                     
-                    <button className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl border border-[#F8AE1B]/50 text-gray-700 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md">
+                    <button onClick={handleWarrantyClick} className="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold rounded-xl border border-[#F8AE1B]/50 text-gray-700 hover:bg-[#F8AE1B]/10 hover:border-[#F8AE1B] hover:text-[#F8AE1B] transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md">
                     <FiShield className="mr-3" />
                     <span>{heroData.ctaSecondary.text}</span>
                     <FiChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" size={20} />
@@ -279,24 +320,17 @@ export default function Hero() {
                 <div className="relative">
                 {/* Main Phone Display */}
                 <div className="relative mx-auto w-full max-w-md">
-                    {/* Floating Device Container */}
                     <div className={`relative z-10 ${heroData.settings.animations ? 'animate-phone-float' : ''}`}>
                     {/* Phone Device */}
                     <div className="relative w-80 h-[580px] mx-auto bg-gradient-to-b from-gray-900 to-black rounded-[3rem] shadow-2xl border-[16px] border-gray-800 transform rotate-3">
-                        {/* Screen Glow Effect */}
                         {heroData.settings.backgroundEffects && (
                         <div className="absolute -inset-4 bg-gradient-to-r from-[#F8AE1B]/30 via-transparent to-blue-500/30 rounded-[3.5rem] blur-xl opacity-50"></div>
                         )}
                         
-                        {/* Screen */}
                         <div className="absolute inset-4 bg-gradient-to-br from-gray-900 to-black rounded-[2rem] overflow-hidden border border-gray-700/50">
-                        {/* Dynamic Screen Content */}
                         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-900"></div>
-                        
-                        {/* Animated Elements */}
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#F8AE1B] via-yellow-400 to-[#F8AE1B] animate-shimmer"></div>
                         
-                        {/* Screen Content */}
                         <div className="relative p-8 h-full flex flex-col justify-between">
                             <div>
                             <div className="flex items-center gap-2 mb-4">
@@ -325,12 +359,10 @@ export default function Hero() {
                             </div>
                         </div>
                         </div>
-                        
-                        {/* Dynamic Island */}
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-8 bg-black rounded-b-2xl border-x border-b border-gray-700"></div>
                     </div>
                     
-                    {/* Floating Accessories */}
+                    {/* Floating Accessories Desktop */}
                     {heroData.settings.floatingElements && heroData.settings.animations && (
                         <>
                         <div className="absolute -top-6 -left-10 w-24 h-24 bg-gradient-to-br from-gray-800 to-black rounded-2xl border border-gray-700/50 flex items-center justify-center shadow-xl animate-float"

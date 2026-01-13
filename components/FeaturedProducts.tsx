@@ -109,7 +109,7 @@ export default function FeaturedProducts() {
             </div>
 
             {/* Product Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-2">
+            <div className="px-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-2">
             {featuredData.products.map((product) => (
                 <div
                 key={product.id}

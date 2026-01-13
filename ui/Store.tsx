@@ -384,16 +384,16 @@ function StoreContent() {
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-gradient-to-r from-gray-700 to-gray-900">
         <div className="absolute inset-0 bg-white/10"></div>
-        <div className="container mx-auto px-4 py-6 md:py-10 relative">
+        <div className="container mx-auto p-4 md:py-10 relative">
           <div className="pt-3 max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <FiTrendingUp className="text-yellow-300 font-semibold" />
-              <span className="text-white text-sm font-medium">Trending Products</span>
+              <span className="text-white text-xs md:text-sm font-medium">Trending Products</span>
             </div>
-            <h1 className="text-2xl md:text-4xl font-black mb-4 text-yellow-300">
+            <h1 className="text-xl md:text-4xl font-black mb-4 text-yellow-300">
               Premium Phones & Gadgets
             </h1>
-            <p className="text-sm md:text-base text-white/90 mb-8">
+            <p className="text-xs md:text-base text-white/90 mb-3 md:mb-8">
               Discover cutting-edge technology, from flagship smartphones to essential gadgets. 
               Experience innovation with exclusive deals.
             </p>
@@ -412,13 +412,13 @@ function StoreContent() {
 
       {/* Filters Section */}
       <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-2 md:py-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                  className="text-sm md:text-base flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
                 >
                   <FiFilter size={18} />
                   Filters
@@ -430,7 +430,7 @@ function StoreContent() {
                     <button
                       key={category}
                       onClick={() => category === 'all' ? clearAllFilters() : setSelectedCategory(category)}
-                      className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      className={`text-sm md:text-base px-4 py-2 rounded-lg font-medium transition-all ${
                         (selectedCategory === category && !currentSearch && !currentCategory) || (category === 'all' && selectedCategory === 'all' && !currentCategory)
                           ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -445,7 +445,7 @@ function StoreContent() {
               <div className="flex items-center gap-2 md:hidden">
                 <button
                   onClick={clearAllFilters}
-                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold rounded-lg shadow-md active:scale-95 transition-transform"
+                  className="text-sm md:text-base px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold rounded-lg shadow-md active:scale-95 transition-transform"
                 >
                   All
                 </button>
@@ -453,7 +453,7 @@ function StoreContent() {
             </div>
             
             {/* High-End and Low-end Logic */}
-            <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-gray-600">Sort by:</span>
                 <select
@@ -563,7 +563,7 @@ function StoreContent() {
       </div>
 
       {/* Filtered Result */}
-      <div className="w-full container mx-auto px-4 py-8">
+      <div className="w-full container mx-auto px-7 md:px-3 pt-2 pb-8 md:py-8">
         {filteredProducts.length === 0 ? (
           <div className="text-center py-20">
             <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center">
@@ -580,8 +580,8 @@ function StoreContent() {
           </div>
         ) : (
           <>
-            <div className="mb-6 flex gap-1 items-center justify-between">
-              <div className="text-xs text-gray-600">
+            <div className="mb-3 md:mb-6 flex gap-1 items-center justify-between">
+              <div className="text-[7px] md:text-xs text-gray-600">
                 {currentSearch ? (
                   <span>Showing results for "<span className="font-bold">{currentSearch}</span>"</span>
                 ) : currentCategory ? (
@@ -601,7 +601,7 @@ function StoreContent() {
               </div>
             </div>
             
-            <div className={`grid gap-6 ${
+            <div className={`grid gap-6 md:gap-4${
               viewMode === 'grid' 
                 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
                 : 'grid-cols-1'
@@ -658,20 +658,20 @@ function StoreContent() {
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">2,000+</div>
-              <p className="text-gray-300">Happy Customers</p>
+              <div className="text-xl md:text-3xl font-bold mb-2">2,000+</div>
+              <p className="text-sm md:text-base text-gray-300">Happy Customers</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">24/7</div>
-              <p className="text-gray-300">Customer Support</p>
+              <div className="text-xl md:text-3xl font-bold mb-2">24/7</div>
+              <p className="text-sm md:text-base text-gray-300">Customer Support</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">1-2 Years </div>
-              <p className="text-gray-300">Warranty Policy</p>
+              <div className="text-xl md:text-3xl font-bold mb-2">1-2 Years </div>
+              <p className="text-sm md:text-base text-gray-300">Warranty Policy</p>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">Free</div>
-              <p className="text-gray-300">Shipping Over ₦475,000</p>
+              <div className="text-xl md:text-3xl font-bold mb-2">Free</div>
+              <p className="text-sm md:text-base text-gray-300">Shipping Over ₦475,000</p>
             </div>
           </div>
         </div>

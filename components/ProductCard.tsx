@@ -93,7 +93,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             <img
               src={isHovered && product.images[1] ? product.images[1] : product.images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-conain  transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-fill  md:object-cover  transition-transform duration-700 group-hover:scale-110"
             />
           </div>
         </div>

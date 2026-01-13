@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import Toaster from '@/components/Toaster'
@@ -162,7 +162,7 @@ const mockProducts: Product[] = [
   }
 ]
 
-export default function StorePageUi() {
+function StoreContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const currentSearch = searchParams.get('search')
@@ -639,5 +639,20 @@ export default function StorePageUi() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function StorePageUi() {
+  return (
+    <Suspense fallback={
+      <div className="w-full min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 font-medium">Loading Samkay Store...</p>
+        </div>
+      </div>
+    }>
+      <StoreContent />
+    </Suspense>
   )
 }

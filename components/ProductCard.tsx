@@ -98,9 +98,9 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           </div>
         </div>
         
-        <div className="p-5 py-2">
+        <div className="p-4 pt-1">
           {/* Level Header: Brand and Eye Button */}
-          <div className="mb-2 flex justify-between items-center">
+          <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{product.brand}</span>
             <button 
                 onClick={(e) => {e.stopPropagation(); setIsDetailOpen(true)}}
@@ -114,16 +114,16 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           <h3 className="font-bold text-gray-900 m:text-lg mb-1 line-clamp-2">{product.name}</h3>
           
           {/* Feature Highlight */}
-          <p className="text-[10px] md:text-xs font-medium text-blue-600 mb-3 bg-blue-50 inline-block px-2 py-0.5 rounded">
+          <p className="text-[10px] md:text-xs font-medium text-blue-600 mb-2 bg-blue-50 inline-block px-2 py-0.5 rounded">
             {product.specs[0]}
           </p>
           
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <FiHeart className="text-red-500" fill="currentColor" size={14} />
             <span className="text-sm text-gray-500">{currentLikes} likes</span>
           </div>
           
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <p className="text-2xl font-bold text-gray-900">₦{product.price.toLocaleString()}</p>
             <span className="text-xs px-3 py-1 bg-gray-100 text-gray-600 rounded-full">{product.category}</span>
           </div>

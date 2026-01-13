@@ -11,6 +11,8 @@ import {
     FiX 
 } from 'react-icons/fi'
 import { useState } from 'react'
+import Link from 'next/link';
+
 
 export default function ServicesPreview() {
     // State to track which service modal is open
@@ -163,6 +165,10 @@ export default function ServicesPreview() {
                     })}
                 </div>
 
+                <div className='pt-6 text-center'>
+                    <Link href={"/services"} className='underline py-2 text-blue-700 text-sm hover:text-blue-500'>Visit Our Services Page</Link>
+                </div>
+
                 {/* CTA Section */}
                 <div className="mt-16 sm:mt-20 lg:mt-24">
                     <div className="relative bg-gray-50 border border-gray-200 rounded-3xl px-4 py-6 md:p-6 sm:p-12 max-w-4xl mx-auto shadow-lg overflow-hidden">
@@ -206,10 +212,10 @@ export default function ServicesPreview() {
                 </div>
             </div>
 
-            {/* MODAL OVERLAY */}
+            {/* LEARN MORE MODAL OVERLAY */}
             {activeService && (
                 <div 
-                    className="fixed inset-0 w-full h-full bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-[9999]"
+                    className="fixed inset-0 w-full h-full bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50"
                     onClick={() => setActiveService(null)}
                 >
                     <div 

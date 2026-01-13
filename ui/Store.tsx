@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import ProductCard from '@/components/ProductCard'
 import Toaster from '@/components/Toaster'
 import { FiFilter, FiGrid, FiList, FiChevronDown, FiTrendingUp, FiHeart, FiX, FiCheck } from 'react-icons/fi'
@@ -28,7 +29,7 @@ interface Product {
   colors?: string[];
 }
 
-// Enhanced mock products with more variety - all prices converted to Naira (1 USD = 1500 NGN)
+// Mock products data
 const mockProducts: Product[] = [
   {
     id: 'iphone-15-pro',
@@ -78,7 +79,7 @@ const mockProducts: Product[] = [
   },
   {
     id: 'powerbank-100w',
-    name: 'Anker 100W Power Bank',
+    name: 'Oppo 100W Power Bank',
     description: 'High-speed charging with 100W output. Charges laptop and phone simultaneously.',
     price: 193500,
     originalPrice: 238500,
@@ -88,11 +89,11 @@ const mockProducts: Product[] = [
     reviews: 3124,
     likes: 456,
     stock: 156,
-    brand: 'Anker',
+    brand: 'Oppo',
     warranty: '18 Months',
     delivery: 'Same Day',
     images: [
-      'https://images.unsplash.com/photo-1597758604680-de06e9e6b5f5?auto=format&fit=crop&w=500',
+      'https://images.philips.com/is/image/philipsconsumer/6b679765189446f4b3aab0bf00788c3b?$pnglarge$&wid=960',
       'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=500'
     ],
     colors: ['#2D3748', '#4A5568'],
@@ -158,216 +159,15 @@ const mockProducts: Product[] = [
       'https://images.unsplash.com/photo-1586816879360-004f5b0c51e5?auto=format&fit=crop&w=500&q=60'
     ],
     specs: ['15W Fast Charging', 'MagSafe Compatible', '3-in-1 Design', 'LED Indicator', 'Apple Certified']
-  },
-  {
-    id: 'gaming-mouse',
-    name: 'Logitech G Pro X Superlight',
-    description: 'Ultra-lightweight gaming mouse with HERO sensor. Perfect for competitive gaming.',
-    price: 193500,
-    originalPrice: 223500,
-    discount: 13,
-    category: 'Gaming',
-    rating: 4.8,
-    reviews: 2109,
-    likes: 345,
-    stock: 34,
-    brand: 'Logitech',
-    warranty: '2 Years',
-    delivery: 'Same Day',
-    images: [
-      'https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#FFFFFF', '#000000', '#FF6B35'],
-    specs: ['63g Ultra-light', 'HERO 25K Sensor', '5 Programmable Buttons', '70hr Battery', 'Lightspeed Wireless']
-  },
-  {
-    id: 'smart-watch',
-    name: 'Apple Watch Ultra 2',
-    description: 'The most rugged and capable Apple Watch for extreme adventures and workouts.',
-    price: 1198500,
-    category: 'Smartwatch',
-    rating: 4.5,
-    reviews: 987,
-    likes: 178,
-    stock: 28,
-    brand: 'Apple',
-    warranty: '1 Year',
-    delivery: 'Next Day',
-    images: [
-      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#2D3748', '#4A5568'],
-    specs: ['49mm Titanium Case', 'Always-On Retina', 'GPS + Cellular', '36hr Battery', 'Depth Gauge']
-  },
-  {
-    id: 'portable-monitor',
-    name: 'ASUS ZenScreen Portable Monitor',
-    description: '15.6" USB-C portable monitor for mobile workstations. Perfect for travelers.',
-    price: 448500,
-    originalPrice: 523500,
-    discount: 14,
-    category: 'Monitor',
-    rating: 4.4,
-    reviews: 567,
-    likes: 89,
-    stock: 52,
-    brand: 'ASUS',
-    warranty: '3 Years',
-    delivery: '3-5 Days',
-    images: [
-      'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&w=500'
-    ],
-    specs: ['15.6" IPS', 'USB-C Power', '780g Weight', 'Smart Case Stand', 'HDR Support']
-  },
-  {
-    id: 'keyboard-mechanical',
-    name: 'Keychron K8 Pro Mechanical Keyboard',
-    description: 'Wireless mechanical keyboard with hot-swappable switches and RGB backlight.',
-    price: 148500,
-    category: 'Keyboard',
-    rating: 4.7,
-    reviews: 892,
-    likes: 167,
-    stock: 67,
-    brand: 'Redmi',
-    warranty: '1 Year',
-    delivery: '2-3 Days',
-    images: [
-      'https://images.unsplash.com/photo-1595225475487-2e1c8db3b82c?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#1A202C', '#2D3748'],
-    specs: ['Gateron Switches', 'Hot-swappable', 'RGB Backlight', 'Bluetooth 5.1', '4000mAh Battery']
-  },
-  {
-    id: 'webcam-4k',
-    name: 'Logitech Brio 4K Webcam',
-    description: '4K Ultra HD webcam with HDR and Windows Hello facial recognition.',
-    price: 298500,
-    originalPrice: 373500,
-    discount: 20,
-    category: 'Webcam',
-    rating: 4.6,
-    reviews: 1234,
-    likes: 256,
-    stock: 41,
-    brand: 'Vivo',
-    warranty: '2 Years',
-    delivery: 'Same Day',
-    images: [
-      'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1590602847867-6d3f4c8d6c2a?auto=format&fit=crop&w=500'
-    ],
-    specs: ['4K Ultra HD', 'HDR Support', 'Windows Hello', 'Autofocus', 'Noise Reduction']
-  },
-  {
-    id: 'external-ssd',
-    name: 'Samsung T7 Shield SSD 2TB',
-    description: 'Portable SSD with rugged design, IP65 rating, and 1050MB/s transfer speeds.',
-    price: 223500,
-    category: 'Storage',
-    rating: 4.8,
-    reviews: 2987,
-    likes: 456,
-    stock: 124,
-    brand: 'Samsung',
-    warranty: '3 Years',
-    delivery: 'Next Day',
-    images: [
-      'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#2D3748', '#4A5568'],
-    specs: ['2TB Capacity', '1050MB/s Read', 'IP65 Water Resistant', 'USB 3.2 Gen2', 'Compact Design']
-  },
-  {
-    id: 'playstation-5',
-    name: 'PlayStation 5 Digital Edition',
-    description: 'Next-gen gaming console with ultra-high speed SSD and immersive gaming experiences.',
-    price: 598500,
-    originalPrice: 673500,
-    discount: 11,
-    category: 'Gaming Console',
-    rating: 4.9,
-    reviews: 6543,
-    likes: 789,
-    stock: 15,
-    brand: 'Sony',
-    warranty: '1 Year',
-    delivery: '3-5 Days',
-    images: [
-      'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?auto=format&fit=crop&w=500'
-    ],
-    specs: ['825GB SSD', '4K Gaming', 'Ray Tracing', 'Digital Edition', 'DualSense Controller']
-  },
-  {
-    id: 'noise-cancelling-headphones',
-    name: 'Sony WH-1000XM5',
-    description: 'Industry-leading noise cancellation with 30-hour battery life and voice assistant.',
-    price: 598500,
-    category: 'Headphones',
-    rating: 4.8,
-    reviews: 5678,
-    likes: 678,
-    stock: 82,
-    brand: 'Sony',
-    warranty: '2 Years',
-    delivery: 'Next Day',
-    images: [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#000000', '#2D3748'],
-    specs: ['Industry ANC', '30hr Battery', 'Touch Controls', 'Hi-Res Audio', 'Voice Assistant']
-  },
-  {
-    id: 'portable-projector',
-    name: 'XGIMI MoGo 2 Pro Portable Projector',
-    description: '1080p portable projector with Android TV, auto focus, and built-in battery.',
-    price: 898500,
-    originalPrice: 1048500,
-    discount: 14,
-    category: 'Projector',
-    rating: 4.5,
-    reviews: 432,
-    likes: 123,
-    stock: 23,
-    brand: 'Oppo',
-    warranty: '2 Years',
-    delivery: '3-5 Days',
-    images: [
-      'https://images.unsplash.com/photo-1561930661-b36c5b7a6dcf?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1561930661-b36c5b7a6dcf?auto=format&fit=crop&w=500&q=80'
-    ],
-    specs: ['1080p Native', 'Android TV 11', 'Auto Focus', 'Built-in Battery', 'Harmon Kardon Sound']
-  },
-  {
-    id: 'smart-home-hub',
-    name: 'Google Nest Hub (2nd Gen)',
-    description: '7" smart display with Google Assistant, sleep sensing, and hands-free control.',
-    price: 148500,
-    category: 'Smart Home',
-    rating: 4.4,
-    reviews: 2890,
-    likes: 456,
-    stock: 156,
-    brand: 'Google',
-    warranty: '1 Year',
-    delivery: 'Same Day',
-    images: [
-      'https://images.unsplash.com/photo-1558089687-f282ffcbc0d4?auto=format&fit=crop&w=500',
-      'https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=500'
-    ],
-    colors: ['#F5F5F7', '#2D3748'],
-    specs: ['7" Display', 'Google Assistant', 'Sleep Sensing', 'Hands-free Control', 'Streaming Apps']
   }
 ]
 
 export default function StorePageUi() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const currentSearch = searchParams.get('search')
+  const currentCategory = searchParams.get('category')
+
   const [products, setProducts] = useState<Product[]>(mockProducts)
   const [filteredProducts, setFilteredProducts] = useState<Product[]>(mockProducts)
   const [categories, setCategories] = useState<string[]>([])
@@ -375,28 +175,31 @@ export default function StorePageUi() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedBrands, setSelectedBrands] = useState<string[]>([])
   const [sortBy, setSortBy] = useState<string>('featured')
-  const [priceRange, setPriceRange] = useState<number>(2250000) // Single price range: up to ₦2,250,000 (was $1500)
+  const [priceRange, setPriceRange] = useState<number>(2250000)
   const [cartCount, setCartCount] = useState<number>(0)
   const [likesCount, setLikesCount] = useState<number>(0)
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false)
 
+  // Pagination States
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const productsPerPage = 16
+
+  // Listen for category updates from URL (Sidebar navigation)
   useEffect(() => {
-    // Extract unique categories
+    if (currentCategory) {
+      setSelectedCategory(currentCategory);
+    }
+  }, [currentCategory])
+
+  useEffect(() => {
     const uniqueCategories = ['all', ...new Set(mockProducts.map(p => p.category))]
     setCategories(uniqueCategories)
-    
-    // Extract unique brands
     const uniqueBrands = ['All', ...new Set(mockProducts.map(p => p.brand))]
     setBrands(uniqueBrands)
-    
-    // Load cart count from localStorage
     updateCartCount()
-    
-    // Load likes count from localStorage
     updateLikesCount()
     
-    // Listen for cart updates
     window.addEventListener('samkay-update-cart', updateCartCount)
     window.addEventListener('samkay-update-likes', updateLikesCount)
     
@@ -420,18 +223,27 @@ export default function StorePageUi() {
   useEffect(() => {
     let filtered = [...products]
 
-    // Filter by category
+    // Search filter
+    if (currentSearch) {
+      const query = currentSearch.toLowerCase()
+      filtered = filtered.filter(p => 
+        p.name.toLowerCase().includes(query) || 
+        p.brand.toLowerCase().includes(query)
+      )
+    }
+
+    // Category filter
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(p => p.category === selectedCategory)
     }
 
-    // Filter by selected brands (exclude 'All' from brands array)
+    // Brand filter
     const brandFilter = selectedBrands.filter(brand => brand !== 'All')
     if (brandFilter.length > 0) {
       filtered = filtered.filter(p => brandFilter.includes(p.brand))
     }
 
-    // Filter by price range (price and below)
+    // Price filter
     filtered = filtered.filter(p => p.price <= priceRange)
 
     // Sort products
@@ -455,7 +267,6 @@ export default function StorePageUi() {
         filtered.sort((a, b) => b.likes - a.likes)
         break
       default:
-        // Featured: New and featured items first
         filtered.sort((a, b) => {
           const aScore = (a.isFeatured ? 3 : 0) + (a.isNew ? 2 : 0) + (a.discount ? 1 : 0)
           const bScore = (b.isFeatured ? 3 : 0) + (b.isNew ? 2 : 0) + (b.discount ? 1 : 0)
@@ -464,46 +275,40 @@ export default function StorePageUi() {
     }
 
     setFilteredProducts(filtered)
-  }, [selectedCategory, selectedBrands, sortBy, priceRange, products])
+    setCurrentPage(1) // Reset to page 1 whenever filters change
+  }, [selectedCategory, selectedBrands, sortBy, priceRange, products, currentSearch])
+
+  // Pagination Logic
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
 
   const handleAddToCart = (product: Product) => {
     const savedCart = JSON.parse(localStorage.getItem('samkay-cart') || '[]')
-    
-    // Check if product already in cart
     const existingIndex = savedCart.findIndex((item: any) => item.id === product.id)
-    
     if (existingIndex >= 0) {
-      // Increment quantity
       savedCart[existingIndex].quantity += 1
     } else {
-      // Add new item
       savedCart.push({
         ...product,
         quantity: 1,
         addedAt: new Date().toISOString()
       })
     }
-    
     localStorage.setItem('samkay-cart', JSON.stringify(savedCart))
     updateCartCount()
-    
-    // Dispatch event for header to update
     window.dispatchEvent(new Event('samkay-update-cart'))
   }
 
   const toggleBrand = (brand: string) => {
     if (brand === 'All') {
-      // If "All" is clicked, clear all other brands and select only "All"
       setSelectedBrands(['All'])
     } else {
-      // Remove "All" from selection if any specific brand is selected
       const updatedBrands = selectedBrands.filter(b => b !== 'All')
-      
       if (updatedBrands.includes(brand)) {
-        // Remove brand if already selected
         setSelectedBrands(updatedBrands.filter(b => b !== brand))
       } else {
-        // Add brand if not selected
         setSelectedBrands([...updatedBrands, brand])
       }
     }
@@ -514,6 +319,8 @@ export default function StorePageUi() {
     setSelectedBrands(['All'])
     setPriceRange(2250000)
     setSortBy('featured')
+    // Clear URL parameters
+    router.push('/store')
   }
 
   return (
@@ -550,7 +357,7 @@ export default function StorePageUi() {
       </div>
 
       {/* Filters Section */}
-      <div className="sticky top-0 z-10 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="flex items-center justify-between">
@@ -568,9 +375,9 @@ export default function StorePageUi() {
                   {categories.slice(0, 5).map(category => (
                     <button
                       key={category}
-                      onClick={() => setSelectedCategory(category)}
+                      onClick={() => category === 'all' ? clearAllFilters() : setSelectedCategory(category)}
                       className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                        selectedCategory === category
+                        (selectedCategory === category && !currentSearch && !currentCategory) || (category === 'all' && selectedCategory === 'all' && !currentCategory)
                           ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md'
                           : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                       }`}
@@ -583,16 +390,10 @@ export default function StorePageUi() {
               
               <div className="flex items-center gap-2 md:hidden">
                 <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-amber-100 text-amber-600' : 'text-gray-500'}`}
+                  onClick={clearAllFilters}
+                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-sm font-bold rounded-lg shadow-md active:scale-95 transition-transform"
                 >
-                  <FiGrid size={20} />
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-amber-100 text-amber-600' : 'text-gray-500'}`}
-                >
-                  <FiList size={20} />
+                  All
                 </button>
               </div>
             </div>
@@ -632,7 +433,6 @@ export default function StorePageUi() {
             </div>
           </div>
           
-          {/* Expanded Filters */}
           {isFilterOpen && (
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -642,7 +442,7 @@ export default function StorePageUi() {
                     {categories.map(category => (
                       <button
                         key={category}
-                        onClick={() => setSelectedCategory(category)}
+                        onClick={() => category === 'all' ? clearAllFilters() : setSelectedCategory(category)}
                         className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
                           selectedCategory === category
                             ? 'bg-amber-500 text-white'
@@ -704,8 +504,8 @@ export default function StorePageUi() {
         </div>
       </div>
 
-      {/* Products Grid */}
-      <div className="container mx-auto px-4 py-8">
+      {/* Filtered Result */}
+      <div className="w-full container mx-auto px-4 py-8">
         {filteredProducts.length === 0 ? (
           <div className="text-center py-20">
             <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-amber-100 to-orange-100 rounded-full flex items-center justify-center">
@@ -723,10 +523,16 @@ export default function StorePageUi() {
         ) : (
           <>
             <div className="mb-6 flex items-center justify-between">
-              <p className="text-gray-600">
-                Showing <span className="font-semibold text-gray-900">{filteredProducts.length}</span> of{' '}
-                <span className="font-semibold text-gray-900">{products.length}</span> products
-              </p>
+              <div className="text-gray-600">
+                {currentSearch ? (
+                  <span>Showing results for "<span className="font-bold">{currentSearch}</span>"</span>
+                ) : currentCategory ? (
+                  <span>Category: <span className="font-bold">{currentCategory}</span></span>
+                ) : (
+                  <span>Showing <span className="font-semibold text-gray-900">{filteredProducts.length}</span> of{' '}
+                  <span className="font-semibold text-gray-900">{products.length}</span> products</span>
+                )}
+              </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm text-gray-500 flex items-center gap-1">
                   <FiHeart className="text-red-500" /> {likesCount} liked
@@ -742,7 +548,7 @@ export default function StorePageUi() {
                 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
                 : 'grid-cols-1'
             }`}>
-              {filteredProducts.map(product => (
+              {currentProducts.map(product => (
                 <ProductCard
                   key={product.id}
                   product={product}
@@ -751,34 +557,50 @@ export default function StorePageUi() {
               ))}
             </div>
             
-            {/* Pagination would go here */}
-            <div className="mt-12 pt-8 border-t border-gray-200">
-              <div className="flex items-center justify-center gap-2">
-                <button className="w-10 h-10 flex items-center justify-center bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
-                  1
-                </button>
-                <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-700">
-                  2
-                </button>
-                <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-700">
-                  3
-                </button>
-                <span className="text-gray-500">...</span>
-                <button className="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-700">
-                  Next
-                </button>
+            {/* Conditional Pagination: Only shows if products exceed 16 */}
+            {filteredProducts.length > productsPerPage && (
+              <div className="mt-12 pt-8 border-t border-gray-200">
+                <div className="flex items-center justify-center gap-2">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => {
+                        setCurrentPage(page);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className={`w-10 h-10 flex items-center justify-center rounded-lg transition-all ${
+                        currentPage === page
+                          ? 'bg-amber-500 text-white font-bold shadow-md'
+                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  
+                  {currentPage < totalPages && (
+                    <button 
+                      onClick={() => {
+                        setCurrentPage(prev => prev + 1);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="px-4 h-10 flex items-center justify-center text-gray-500 hover:text-gray-700 font-medium"
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </>
         )}
       </div>
 
-      {/* Stats Section */}
       <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white">
         <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <div className="text-3xl font-bold mb-2">10,000+</div>
+              <div className="text-3xl font-bold mb-2">2,000+</div>
               <p className="text-gray-300">Happy Customers</p>
             </div>
             <div className="text-center">
@@ -799,4 +621,3 @@ export default function StorePageUi() {
     </div>
   )
 }
-

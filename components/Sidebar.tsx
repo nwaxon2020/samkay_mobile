@@ -18,7 +18,7 @@ import {
 } from 'react-icons/fi'
 import { MdOutlineLocalOffer as OfferIcon } from 'react-icons/md'
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export default function SideBar() {
   // --- 1. ALL HOOKS MUST BE DECLARED FIRST ---
@@ -26,6 +26,7 @@ export default function SideBar() {
   const [isMobile, setIsMobile] = useState(false)
   const [activeItem, setActiveItem] = useState('smartphones')
   const pathname = usePathname()
+  const router = useRouter()
 
   // --- 2. SCREEN DETECTION HOOK ---
   useEffect(() => {
@@ -58,24 +59,32 @@ export default function SideBar() {
   }
 
   // --- 5. DATA OBJECTS ---
+  // Categories matched with the StorePage category names
   const mainNavItems = [
-    { id: 'smartphones', label: 'Smartphones', icon: FiSmartphone, color: 'text-blue-500', bgColor: 'bg-blue-500/10', count: 12 },
-    { id: 'tablets', label: 'Tablets', icon: FiTablet, color: 'text-purple-500', bgColor: 'bg-purple-500/10', count: 5 },
-    { id: 'power-banks', label: 'Power Banks', icon: FiBattery, color: 'text-green-500', bgColor: 'bg-green-500/10', count: 15 },
-    { id: 'speakers', label: 'Bluetooth Speakers', icon: FiSpeaker, color: 'text-orange-500', bgColor: 'bg-orange-500/10', count: 6 },
-    { id: 'headphones', label: 'Headphones', icon: FiHeadphones, color: 'text-pink-500', bgColor: 'bg-pink-500/10', count: 9 },
-    { id: 'laptop', label: 'Laptop', icon: FiMonitor , color: 'text-red-500', bgColor: 'bg-red-500/10', count: 2 },
-    { id: 'cases', label: 'Cases & Covers', icon: FiPackage, color: 'text-indigo-500', bgColor: 'bg-indigo-500/10', count: 24 },
-    { id: 'chargers', label: 'Chargers', icon: FiZap, color: 'text-yellow-500', bgColor: 'bg-yellow-500/10', count: 18 },
-    { id: 'screen-protectors', label: 'Screen Protectors', icon: FiShield, color: 'text-teal-500', bgColor: 'bg-teal-500/10', count: 10 }
+    { id: 'Smartphone', label: 'Smartphones', icon: FiSmartphone, color: 'text-blue-500', bgColor: 'bg-blue-500/10', count: 12 },
+    { id: 'Tablets', label: 'Tablets', icon: FiTablet, color: 'text-purple-500', bgColor: 'bg-purple-500/10', count: 5 },
+    { id: 'Power Bank', label: 'Power Banks', icon: FiBattery, color: 'text-green-500', bgColor: 'bg-green-500/10', count: 15 },
+    { id: 'Speaker', label: 'Bluetooth Speakers', icon: FiSpeaker, color: 'text-orange-500', bgColor: 'bg-orange-500/10', count: 6 },
+    { id: 'Earbuds', label: 'Headphones', icon: FiHeadphones, color: 'text-pink-500', bgColor: 'bg-pink-500/10', count: 9 },
+    { id: 'Laptop', label: 'Laptop', icon: FiMonitor , color: 'text-red-500', bgColor: 'bg-red-500/10', count: 2 },
+    { id: 'Case', label: 'Cases & Covers', icon: FiPackage, color: 'text-indigo-500', bgColor: 'bg-indigo-500/10', count: 24 },
+    { id: 'Charger', label: 'Chargers', icon: FiZap, color: 'text-yellow-500', bgColor: 'bg-yellow-500/10', count: 18 },
+    { id: 'Screen Protector', label: 'Screen Protectors', icon: FiShield, color: 'text-teal-500', bgColor: 'bg-teal-500/10', count: 10 }
   ]
 
   const bottomNavItems = [
-    { id: 'services', label: 'Services', icon: FiSettings, color: 'text-teal-500', bgColor: 'bg-teal-500/10' },
-    { id: 'complain', label: 'Complain', icon: FiMessageSquare, color: 'text-red-500', bgColor: 'bg-red-500/10' }
+    { id: 'services', label: 'Services', icon: FiSettings, color: 'text-teal-500', bgColor: 'bg-teal-500/10', href: '/services' },
+    { id: 'complain', label: 'Complain', icon: FiMessageSquare, color: 'text-red-500', bgColor: 'bg-red-500/10', href: '/chat' }
   ]
 
   const totalItems = mainNavItems.reduce((acc, item) => acc + item.count, 0)
+
+  // Navigation Logic
+  const handleCategoryClick = (categoryId: string) => {
+    setActiveItem(categoryId);
+    router.push(`/store?category=${encodeURIComponent(categoryId)}`);
+    if (isMobile) setIsOpen(false);
+  };
 
   return (
     <>
@@ -139,13 +148,10 @@ export default function SideBar() {
                   return (
                     <li key={item.id}>
                       <button
-                        onClick={() => { 
-                          setActiveItem(item.id); 
-                          if (isMobile) setIsOpen(false); 
-                        }}
+                        onClick={() => handleCategoryClick(item.id)}
                         className={`w-full text-left p-3 rounded-lg transition-all duration-200 group flex items-center justify-between
                           ${isActive 
-                            ? `bg-green-400/10 ${item.color}/20 border-l-2 border-yellow-500 shadow-inner` 
+                            ? `bg-green-400/10 border-l-2 border-yellow-500 shadow-inner` 
                             : 'hover:bg-gray-700/40 hover:border-l-2 hover:border-gray-600'
                           }
                         `}
@@ -172,17 +178,17 @@ export default function SideBar() {
 
                 {bottomNavItems.map((item) => {
                   const Icon = item.icon
-                  const isActive = activeItem === item.id
+                  const isActive = pathname === item.href
                   return (
                     <li key={item.id}>
                       <button
                         onClick={() => { 
-                          setActiveItem(item.id); 
+                          router.push(item.href || '/');
                           if (isMobile) setIsOpen(false); 
                         }}
                         className={`w-full text-left p-3 rounded-lg transition-all duration-200 group flex items-center justify-between
                           ${isActive 
-                            ? `bg-gradient-to-r ${item.color}/20 border-l-2 border-yellow-500 shadow-inner` 
+                            ? `bg-gray-800 border-l-2 border-yellow-500 shadow-inner` 
                             : 'hover:bg-gray-800/40 hover:border-l-2 hover:border-gray-600'
                           }
                         `}

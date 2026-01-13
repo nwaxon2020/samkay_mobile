@@ -5,6 +5,8 @@ import {
   FiFacebook, FiTwitter, FiInstagram, FiYoutube, 
   FiMail, FiPhone, FiMapPin, FiArrowUp, FiChevronRight,
 } from 'react-icons/fi'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 /** * EDITABLE CONFIGURATION 
  * Add or remove items here to update the footer instantly
@@ -29,12 +31,12 @@ const FOOTER_DATA = {
     { label: "Contact Us", href: "mailto:princnwachukwu308@yahoo.com" },
   ],
   categories: [
-    { label: "Smartphones", href: "/categories/smartphones" },
-    { label: "Tablets", href: "/categories/tablets" },
-    { label: "Power Banks", href: "/categories/power-banks" },
-    { label: "Headphones", href: "/categories/headphones" },
-    { label: "Chargers", href: "/categories/chargers" },
-    { label: "Cases & Covers", href: "/categories/cases" },
+    { id: 'Smartphone', label: "Smartphones" },
+    { id: 'Tablets', label: "Tablets" },
+    { id: 'Power Bank', label: "Power Banks" },
+    { id: 'Earbuds', label: "Headphones" },
+    { id: 'Charger', label: "Chargers" },
+    { id: 'Case', label: "Cases & Covers" },
   ],
   contact: {
     address: "123 Tech Street, Silicon Valley, CA",
@@ -44,8 +46,14 @@ const FOOTER_DATA = {
 }
 
 export default function Footer() {
+  const router = useRouter();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    router.push(`/store?category=${encodeURIComponent(categoryId)}`);
   };
 
   return (
@@ -96,16 +104,16 @@ export default function Footer() {
             <ul className="space-y-4">
               {FOOTER_DATA.navigation.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-gray-400 hover:text-white flex items-center gap-2 transition-all duration-300 text-sm group">
+                  <Link href={item.href} className="text-gray-400 hover:text-white flex items-center gap-2 transition-all duration-300 text-sm group">
                     <FiChevronRight size={12} className="text-yellow-500 opacity-0 group-hover:opacity-100 -ml-4 group-hover:ml-0 transition-all" />
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* 3. CATEGORIES - Mapping from Object */}
+          {/* 3. CATEGORIES - Logic Updated to match Sidebar */}
           <div>
             <h3 className="text-xs font-black uppercase tracking-[0.25em] text-yellow-500 mb-8 flex items-center gap-2">
               <span className="w-4 h-px bg-yellow-500"></span> Collections
@@ -113,9 +121,12 @@ export default function Footer() {
             <ul className="grid grid-cols-1 gap-4">
               {FOOTER_DATA.categories.map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="text-gray-400 hover:text-white transition-colors text-sm hover:translate-x-1 inline-block duration-300">
+                  <button 
+                    onClick={() => handleCategoryClick(item.id)}
+                    className="text-gray-400 hover:text-white transition-colors text-sm hover:translate-x-1 inline-block duration-300 text-left"
+                  >
                     {item.label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -169,8 +180,8 @@ export default function Footer() {
           
           <div className="flex items-center gap-8">
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-500 hover:text-yellow-500 text-[10px] uppercase font-bold tracking-widest transition-colors">Privacy</a>
-              <a href="#" className="text-gray-500 hover:text-yellow-500 text-[10px] uppercase font-bold tracking-widest transition-colors">Terms</a>
+              <Link href="/privacy" className="text-gray-500 hover:text-yellow-500 text-[10px] uppercase font-bold tracking-widest transition-colors">Privacy</Link>
+              <Link href="/terms" className="text-gray-500 hover:text-yellow-500 text-[10px] uppercase font-bold tracking-widest transition-colors">Terms</Link>
             </div>
             
             <button 

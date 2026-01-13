@@ -84,7 +84,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           {/* Like Button */}
           <button 
             onClick={toggleLike} 
-            className={`absolute top-3 left-3 z-20 w-8 h-8 rounded-full shadow-lg flex items-center justify-center transition-all ${isLiked ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-red-50 hover:text-red-500'}`}
+            className={`absolute top-3 left-3 z-10 w-8 h-8 rounded-full shadow-lg flex items-center justify-center transition-all ${isLiked ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-red-50 hover:text-red-500'}`}
           >
             <FiHeart fill={isLiked ? "currentColor" : "none"} size={18} />
           </button>
@@ -164,7 +164,8 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
                 <div className="flex items-center gap-1 text-red-500 font-bold my-4">
                   <FiHeart fill="currentColor" /> {currentLikes} likes
                 </div>
-                <div className="text-4xl font-bold text-gray-900 mb-8">₦{product.price.toLocaleString()}</div>
+                <div className="text-sm md:text-base bg-gray-50 text-gray-500 p-3 rounded">{product.description}</div>
+                <div className="text-4xl font-bold text-gray-900 my-4">₦{product.price.toLocaleString()}</div>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button onClick={handleAddToCart} className="flex-1 bg-white border-2 border-amber-500 text-amber-600 font-bold py-4 rounded-xl flex items-center justify-center gap-2">
                     <FiShoppingCart /> Add to Cart

@@ -175,16 +175,18 @@ export default function FeaturedProducts() {
 
                     {/* Price & CTA */}
                     <div className="flex flex-col items-center justify-between pt-3 sm:pt-4 border-t border-gray-700/50">
-                        
-                        
-                        <button className="text-center w-full group relative inline-flex justify-center items-center gap-1.5 sm:gap-2 px-3 py-2 md:px-4 rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95">
+                        <Link 
+                            href={`/purchase?id=${product.id}`}
+                            className="z-10 w-full group relative inline-flex justify-center items-center gap-1.5 sm:gap-2 px-3 py-2 md:px-4 rounded-lg overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95"
+                        >
                             <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] to-yellow-500"></span>
                             <span className="absolute inset-0 bg-gradient-to-r from-[#F8AE1B] via-yellow-500 to-[#F8AE1B] opacity-0 group-hover:opacity-100 animate-shimmer"></span>
+                            
                             <span className="relative flex items-center text-black font-bold text-sm sm:text-base">
                                 <FiShoppingCart size={14} className="sm:size-[18px]" />
-                                <span className="ml-1">Add</span>
+                                <span className="ml-1">Buy</span>
                             </span>
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

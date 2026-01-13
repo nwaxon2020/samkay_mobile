@@ -250,21 +250,20 @@ export default function Header() {
                                 <>
                                     {/* Cart Panel */}
                                     <div
-                                    className="
-                                        fixed
-                                        right-3 sm:right-6
-                                        top-16 sm:top-20
-                                        w-[92vw]
-                                        max-w-sm sm:max-w-md
-                                        bg-gray-900
-                                        rounded-2xl
-                                        shadow-2xl
-                                        border border-gray-800
-                                        overflow-hidden
-                                        z-[1000]
-                                        animate-scale-in
-                                    "
-                                    >
+                                        className="
+                                            fixed
+                                            right-3 sm:right-6
+                                            top-16 sm:top-20
+                                            w-[calc(100vw-1.5rem)]
+                                            max-w-sm sm:max-w-md
+                                            bg-gray-900
+                                            rounded-2xl
+                                            shadow-2xl
+                                            border border-gray-800
+                                            overflow-hidden
+                                            z-[1000]
+                                            animate-scale-in"
+                                        >
                                     <CartContent 
                                         cartItems={cartItems}
                                         cartCount={cartCount}

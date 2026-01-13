@@ -14,7 +14,8 @@ export async function GET() {
     "Redmi", 
     "OnePlus", 
     "Infinix", 
-    "Tecno"
+    "Tecno",
+    "itel"
   ];
   
   const query = brands.join("+OR+");

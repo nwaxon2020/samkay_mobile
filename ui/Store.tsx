@@ -197,6 +197,22 @@ export default function StorePageUi() {
     setCategories(uniqueCategories)
     const uniqueBrands = ['All', ...new Set(mockProducts.map(p => p.brand))]
     setBrands(uniqueBrands)
+    
+    // --- GLOBAL CLEANUP LOGIC ---
+    const syncLikesWithStore = () => {
+      const savedLikes = JSON.parse(localStorage.getItem('samkay-product-likes') || '[]')
+      const currentIds = mockProducts.map(p => p.id)
+      
+      // Remove IDs that don't exist in mockProducts
+      const validLikes = savedLikes.filter((id: string) => currentIds.includes(id))
+      
+      if (validLikes.length !== savedLikes.length) {
+        localStorage.setItem('samkay-product-likes', JSON.stringify(validLikes))
+      }
+    }
+    syncLikesWithStore()
+    // ----------------------------
+
     updateCartCount()
     updateLikesCount()
     
@@ -398,6 +414,7 @@ export default function StorePageUi() {
               </div>
             </div>
             
+            {/* High-End and Low-end Logic */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-gray-600">Sort by:</span>
@@ -433,6 +450,7 @@ export default function StorePageUi() {
             </div>
           </div>
           
+          {/* Cartigories Dropdown and Logic */}
           {isFilterOpen && (
             <div className="mt-4 pt-4 border-t border-gray-200">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -455,6 +473,7 @@ export default function StorePageUi() {
                   </div>
                 </div>
                 
+                {/* Price Range Logic */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3">Price Range: Up to ₦{priceRange.toLocaleString()}</h4>
                   <div className="space-y-4">
@@ -476,6 +495,7 @@ export default function StorePageUi() {
                   </div>
                 </div>
                 
+                {/* Brand Logic */}
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-3">Brand</h4>
                   <div className="flex flex-wrap gap-2">
@@ -522,8 +542,8 @@ export default function StorePageUi() {
           </div>
         ) : (
           <>
-            <div className="mb-6 flex items-center justify-between">
-              <div className="text-gray-600">
+            <div className="mb-6 flex gap-1 items-center justify-between">
+              <div className="text-xs text-gray-600">
                 {currentSearch ? (
                   <span>Showing results for "<span className="font-bold">{currentSearch}</span>"</span>
                 ) : currentCategory ? (

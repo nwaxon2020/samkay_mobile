@@ -17,12 +17,12 @@ export default function FeaturedProducts() {
         products: [
             {
                 id: 1,
-                name: 'Quantum X Pro',
+                name: 'Phantom X Pro',
                 category: 'Flagship Smartphone',
                 price: 1199,
                 rating: 4.8,
                 features: ['8K Video', '1TB Storage',],
-                image: '📱',
+                image: 'https://www.thetechoutlook.com/wp-content/uploads/2025/11/Tecno-Camon-40-Feature-Image.jpg',
                 color: 'from-blue-500/20 via-blue-400/20 to-purple-500/20',
                 tag: 'BEST SELLER'
             },
@@ -33,7 +33,7 @@ export default function FeaturedProducts() {
                 price: 549,
                 rating: 4.9,
                 features: ['Active Noise Cancel', '30h Battery',],
-                image: '🎧',
+                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSux_i-1Mm9CZs0HHEpSP4AxJvnhlQexpl95A&s',
                 color: 'from-green-500/20 via-emerald-400/20 to-cyan-500/20',
                 tag: 'NEW'
             },
@@ -44,7 +44,7 @@ export default function FeaturedProducts() {
                 price: 89,
                 rating: 4.5,
                 features: ['20000mAh', '65W Fast Charge',],
-                image: '🔋',
+                image: 'https://images.philips.com/is/image/philipsconsumer/5f71826eafac4bf9af89b0d001140798?wid=700&hei=700&$pnglarge$',
                 color: 'from-orange-500/20 via-amber-400/20 to-yellow-500/20',
                 tag: 'SALE'
             },
@@ -55,7 +55,7 @@ export default function FeaturedProducts() {
                 price: 799,
                 rating: 4.7,
                 features: ['Health Tracking', '7-Day Battery',],
-                image: '⌚',
+                image: "https://rifugionigeria.com/wp-content/uploads/2024/07/osw-42.webp",
                 color: 'from-pink-500/20 via-rose-400/20 to-red-500/20',
                 tag: 'PREMIUM'
             },
@@ -125,13 +125,13 @@ export default function FeaturedProducts() {
                 )}
 
                 {/* Product Visual */}
-                <div className={`relative h-48 sm:h-56 flex items-center justify-center bg-gradient-to-br ${product.color} overflow-hidden`}>
+                <div className={`relative h-55 md:h-48 flex items-center justify-center bg-gradient-to-br ${product.color} overflow-hidden`}>
                     {/* Animated Background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-transparent via-black/10 to-transparent animate-shimmer"></div>
                     
                     {/* Product Icon */}
-                    <div className={`relative text-7xl sm:text-8xl ${featuredData.settings.animations ? 'animate-float' : ''}`}>
-                    {product.image}
+                    <div className={`w-full h-full relative ${featuredData.settings.animations ? 'animate-float' : ''}`}>
+                        <img src={product.image} alt={product.name} className='w-full h-full object-cover'/>
                     </div>
                     
                     {/* Glow Effect */}

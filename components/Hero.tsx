@@ -143,10 +143,10 @@ export default function Hero() {
                             <p className="text-sm md:text-lg text-gray-700 leading-relaxed text-center max-w-xl mx-auto px-4">{heroData.description}</p>
                         </div>
 
-                        <div className="px-5 my-8 sm:my-12">
+                        <div className="px-8 my-8 sm:my-12">
                             <div className="relative mx-auto w-full max-w-[18rem] md:max-w-sm">
                                 <div className={`relative z-10 ${heroData.settings.animations ? 'animate-phone-float' : ''}`}>
-                                    <div className="relative w-full h-[480px] mx-auto bg-gradient-to-b from-gray-900 to-black rounded-[2.5rem] shadow-2xl border-[12px] sm:border-[14px] border-gray-800 overflow-hidden">
+                                    <div className="relative w-full h-[460px] mx-auto bg-gradient-to-b from-gray-900 to-black rounded-[2.5rem] shadow-2xl border-[12px] sm:border-[14px] border-gray-800 overflow-hidden">
                                         {heroData.settings.backgroundEffects && (
                                             <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-[#F8AE1B]/30 via-transparent to-blue-500/30 rounded-[3rem] blur-xl opacity-30"></div>
                                         )}

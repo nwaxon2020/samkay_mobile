@@ -89,11 +89,11 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
             <FiHeart fill={isLiked ? "currentColor" : "none"} size={18} />
           </button>
 
-          <div className="bg-black w-full h-48 md:h-56 flex justify-center items-center">
+          <div className="bg-black w-full h-60 flex justify-center items-center">
             <img
               src={isHovered && product.images[1] ? product.images[1] : product.images[selectedImage]}
               alt={product.name}
-              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-conain  transition-transform duration-700 group-hover:scale-110"
             />
           </div>
         </div>

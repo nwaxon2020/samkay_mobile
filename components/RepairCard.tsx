@@ -24,7 +24,7 @@ export default function RepairCard({ repair }: { repair: RepairItem }) {
             className="group relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:border-yellow-200 transition-all duration-300 cursor-pointer"
         >
             <div className="h-48 bg-gray-50 flex items-center justify-center p-4">
-                <img src={repair.image} alt={repair.name} className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500 rounded" />
+                <img src={repair.image} alt={repair.name} className="w-full h-full object-fill group-hover:scale-110 transition-transform duration-500 rounded" />
             </div>
             
             <div className="relative p-5">

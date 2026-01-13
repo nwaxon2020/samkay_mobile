@@ -53,7 +53,7 @@ export default function SideBar() {
   }, [isMobile, isOpen])
 
   // --- 4. CONDITIONAL HIDE LOGIC (MUST BE AFTER HOOKS) ---
-  const hiddenPages = ['/about-us', '/privacy', '/terms']
+  const hiddenPages = ['/about-us', '/privacy', '/terms', '/purchase']
   if (hiddenPages.includes(pathname)) {
     return null
   }

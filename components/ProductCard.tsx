@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
-import { FiShoppingCart, FiEye, FiX, FiCheck, FiHeart } from 'react-icons/fi'
+import { FiShoppingCart, FiEye, FiX, FiCheck, FiHeart, FiExternalLink } from 'react-icons/fi'
 
 interface Product {
   id: string;
@@ -44,7 +44,6 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
     const likes = JSON.parse(localStorage.getItem('samkay-product-likes') || '[]')
     setIsLiked(likes.includes(product.id))
     
-    // Listen for likes updates
     const handleLikesUpdate = () => {
       const updatedLikes = JSON.parse(localStorage.getItem('samkay-product-likes') || '[]')
       setIsLiked(updatedLikes.includes(product.id))
@@ -75,13 +74,11 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
   return (
     <>
       <div className="group relative bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-        {/* Container with reduced top padding pt-1 */}
         <div 
           className="relative md:h-50 overflow-hidden bg-gradient-to-b from-gray-50 to-white"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Like Button */}
           <button 
             onClick={toggleLike} 
             className={`absolute top-3 left-3 z-10 w-8 h-8 rounded-full shadow-lg flex items-center justify-center transition-all ${isLiked ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-700 hover:bg-red-50 hover:text-red-500'}`}
@@ -99,7 +96,6 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         </div>
         
         <div className="p-4 pt-1">
-          {/* Level Header: Brand and Eye Button */}
           <div className="flex justify-between items-center">
             <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">{product.brand}</span>
             <button 
@@ -113,7 +109,6 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
           
           <h3 className="font-bold text-gray-900 m:text-lg mb-1 line-clamp-2">{product.name}</h3>
           
-          {/* Feature Highlight */}
           <p className="text-[10px] md:text-xs font-medium text-blue-600 mb-2 bg-blue-50 inline-block px-2 py-0.5 rounded">
             {product.specs[0]}
           </p>
@@ -139,7 +134,6 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         </div>
       </div>
 
-      {/* Product Detail Overlay */}
       {isDetailOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsDetailOpen(false)} />
@@ -164,13 +158,37 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
                 <div className="flex items-center gap-1 text-red-500 font-bold my-4">
                   <FiHeart fill="currentColor" /> {currentLikes} likes
                 </div>
-                <div className="text-sm md:text-base bg-gray-50 text-gray-500 p-3 rounded">{product.description}</div>
-                <div className="text-4xl font-bold text-gray-900 my-4">₦{product.price.toLocaleString()}</div>
+
+                {/* Specs section with GSM Arena Link */}
+                <div className="mb-6">
+                  <h4 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-3">Specifications</h4>
+                  <div className="grid grid-cols-2 gap-2">
+                    {product.specs.map((spec, index) => (
+                      <div key={index} className="flex items-center gap-2 text-xs md:text-sm text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
+                        <FiCheck className="text-green-500 flex-shrink-0" />
+                        <span>{spec}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-3">
+                    <a 
+                      href={`https://www.google.com/search?q=${encodeURIComponent(product.brand + ' ' + product.name)}+gsmarena`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-semibold text-amber-600 hover:text-orange-600 flex items-center gap-1 transition-colors underline decoration-dotted underline-offset-4"
+                    >
+                      <FiExternalLink size={14} /> View full specs on GSM Arena
+                    </a>
+                  </div>
+                </div>
+
+                <div className="text-xs md:text-sm bg-gray-50 text-gray-500 p-3 rounded">{product.description}</div>
+                <div className="text-2xl md:text-4xl font-bold text-gray-900 my-4">₦{product.price.toLocaleString()}</div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button onClick={handleAddToCart} className="flex-1 bg-white border-2 border-amber-500 text-amber-600 font-bold py-4 rounded-xl flex items-center justify-center gap-2">
+                  <button onClick={handleAddToCart} className="text-sm md:text-base flex-1 bg-white border-2 border-amber-500 text-amber-600 font-bold py-4 rounded-xl flex items-center justify-center gap-2">
                     <FiShoppingCart /> Add to Cart
                   </button>
-                  <Link href={`/purchase?id=${product.id}`} className="flex-1 bg-gray-900 text-white font-bold py-4 rounded-xl text-center">Buy Now</Link>
+                  <Link href={`/purchase?id=${product.id}`} className="text-sm md:text-base flex-1 bg-gray-900 text-white font-bold py-4 rounded-xl text-center">Buy Now</Link>
                 </div>
               </div>
             </div>
